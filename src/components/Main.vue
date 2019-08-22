@@ -1,11 +1,14 @@
 <template>
-    <div class="container">
-      <!-- <img src="http://koyume.prokuma.kr:8080/image/fried-rice-967081_1920.jpg" class="img-fluid"> -->
-        <div class="row">
-            <div class="col-lg-12">
-                <router-link to ="/login"><button type="submit" class="btn btn-primary">ログイン</button></router-link>
-                <router-link to="/register"><button type="submit" class="btn btn-primary">新規登録</button></router-link>
-                <button  v-on:click="logout()" type="submit" class="btn btn-primary">ログアウト</button>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>ASSIST <br>YOU  to<br>COOK  MESI</h1>
+            <div class="row">
+                <div class="col-lg-12">
+                    <router-link to ="/login"><button type="submit" class="btn btn-primary">ログイン</button></router-link>
+                    <router-link to="/register"><button type="submit" class="btn btn-primary">新規登録</button></router-link>
+                    <router-link to="/upload"><button type="submit" class="btn btn-primary">レシピ新規作成</button></router-link>
+                    <button  v-on:click="logout()" type="submit" class="btn btn-primary">ログアウト</button>
+                </div>
             </div>
         </div>
     </div>
@@ -69,3 +72,6 @@ export default {
   }
 }
 </script>
+<style>
+     .jumbotron { background:url(http://koyume.prokuma.kr:8080/image/fried-rice-967081_1920.jpg) center no-repeat; background-size: cover;}
+</style>
