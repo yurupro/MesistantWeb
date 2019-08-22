@@ -24,7 +24,7 @@ export default {
   },
   mounted () {
     console.log(this.$route)
-    this.$axios.get('http://koyume.prokuma.kr:8080/recipe/' + this.$route.params.user_id)
+    this.$axios.get('http://koyume.prokuma.kr:8080/user/' + this.$route.params.user_id + '/recipes')
       .then(response => (this.results = response.data))
   },
   methods: {
