@@ -2,7 +2,7 @@
     <div class="container">
         <div v-for="result in results" :key="result.id">
             <div class="card">
-                <h5 class="card-header">{{result.name}}//{{result.user}}</h5>
+                <h5 class="card-header">{{result.name}}/{{result.user_id}}</h5>
                 <div class="card-body">
                     <h5 class="card-title">説明</h5>
                     <p class="card-text">{{result.description}}</p>
@@ -24,8 +24,11 @@ export default {
   },
   mounted () {
     console.log(this.$route)
-    this.$axios.get('http://koyume.prokuma.kr:8080/user/' + this.$route.params.user_id + '/recipes')
-      .then(response => (this.results = response.data))
+    this.$axios.get('http://koyume.prokuma.kr:8080/recipes')
+      .then(response => {
+        console.log(response.data.array)
+        this.results = response.data.array
+      })
   },
   methods: {
     sendToDevice: function (recipeId) {
