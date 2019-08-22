@@ -6,7 +6,7 @@
                 <div class="card-body">
                     <h5 class="card-title">説明</h5>
                     <p class="card-text">{{result.description}}</p>
-                    <button v-click:on="sendToDevice(result.id)" class="btn btn-primary">デバイスに伝送</button>
+                    <button v-on:click="sendToDevice(result.id)" class="btn btn-primary">デバイスに伝送</button>
                 </div>
             </div>
         </div>
@@ -23,7 +23,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.$route)
     this.$axios.get('http://koyume.prokuma.kr:8080/recipes')
       .then(response => {
         console.log(response.data.array)
@@ -32,7 +31,7 @@ export default {
   },
   methods: {
     sendToDevice: function (recipeId) {
-      this.$axios.get('http://koyume.prokuma.kr:8080/recipe/' + recipeId + '/add_queue')
+      this.$axios.post('http://koyume.prokuma.kr:8080/recipe/' + recipeId + '/add_queue')
         .then(response => {
           console.log(response.data)
           alert('伝送完了')

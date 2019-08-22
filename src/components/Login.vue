@@ -46,18 +46,6 @@ export default {
           console.log(error, this.login_response)
           alert('ログイン失敗')
         })
-    },
-    logout: function () {
-      var data = {'mail': this.form_mail, 'password': this.form_password}
-      this.$axios.post('http://koyume.prokuma.kr:8080/user/logout', data)
-        .then(response => {
-          alert('ログアウト成功')
-          console.log(response)
-        })
-        .catch(error => {
-          alert('ログアウト失敗')
-          console.log(error, this.login_response)
-        })
     }
   }
 }
