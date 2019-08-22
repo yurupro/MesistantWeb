@@ -2,9 +2,22 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <router-link to ="/login"><button type="submit" class="btn btn-primary">ログイン</button></router-link>
-                <router-link to="/register"><button type="submit" class="btn btn-primary">新規登録</button></router-link>
-                <button  v-on:click="logout()" type="submit" class="btn btn-primary">ログアウト</button>
+                <form>
+                    <div class="form-group">
+                        <label for="registerEmailForm">Email</label>
+                        <input v-model="form_mail" type="email" class="form-control" id="registerEmailForm" placeholder="Email"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerNameForm">Name</label>
+                        <input v-model="form_name" type="text" class="form-control" id="registerNameForm" placeholder="Name"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPasswordForm">Password</label>
+                        <input v-model="form_password" type="password" class="form-control" id="registerPasswordForm" placeholder="Password"/>
+                    </div>
+                    <router-link to="/"><button type="submit" class="btn btn-primary">戻る</button></router-link>
+                    <button  v-on:click="register()" type="submit" class="btn btn-primary">登録</button>
+                </form>
             </div>
         </div>
     </div>
@@ -24,28 +37,12 @@ export default {
     }
   },
   methods: {
-    login: function () {
-      console.log(this.mail)
-      var data = {'mail': this.form_mail, 'password': this.form_password}
-      console.log(data)
-      this.$axios.post('http://koyume.prokuma.kr:8080/user/login', data)
-        .then(response => {
-          this.login_response = response
-          console.log(this.login_response)
-          console.log('wei')
-          this.$router.push({path: '/list', params: { user_id: this.login_response.id }})
-        })
-        .catch(error => {
-          alert('ログイン失敗')
-          console.log(error, this.login_response)
-        })
-    },
     logout: function () {
       var data = {'mail': this.form_mail, 'password': this.form_password}
       this.$axios.post('http://koyume.prokuma.kr:8080/user/logout', data)
         .then(response => {
-          console.log(response)
           alert('ログアウト成功')
+          console.log(response)
         })
         .catch(error => {
           alert('ログアウト失敗')

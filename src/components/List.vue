@@ -23,20 +23,20 @@ export default {
     }
   },
   mounted () {
+    console.log(this.$route)
     this.$axios.get('http://koyume.prokuma.kr:8080/recipe/' + this.$route.params.user_id)
-      .then(response => (this.results = response))
+      .then(response => (this.results = response.data))
   },
   methods: {
     sendToDevice: function (recipeId) {
       this.$axios.get('http://koyume.prokuma.kr:8080/recipe/' + recipeId + '/add_queue')
         .then(response => {
-          this.send_result = response
+          console.log(response.data)
           alert('伝送完了')
-          console.log(response)
         })
         .catch(error => {
-          alert('伝送失敗')
           console.log(error)
+          alert('伝送失敗')
         })
     }
   }
