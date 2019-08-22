@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+      <!-- <img src="http://koyume.prokuma.kr:8080/image/fried-rice-967081_1920.jpg" class="img-fluid"> -->
         <div class="row">
             <div class="col-lg-12">
                 <router-link to ="/login"><button type="submit" class="btn btn-primary">ログイン</button></router-link>
