@@ -8,6 +8,7 @@
                             <label for="editRecipe">レシピを追加</label>
                             <textarea v-model="form_text" class="form-control" id="editRecipe" rows="15"></textarea>
                     </div>
+                    <router-link to="/"><button type="submit" class="btn btn-primary">戻る</button></router-link>
                     <button  v-on:click="upload()" type="submit" class="btn btn-primary">アップロード</button>
                 </form>
             </div>
