@@ -9,18 +9,18 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav">
-                        <div v-if="user_id != null">
-                            <li class="nav-item">
-                                <router-link v-bind:to="{ name:'List', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">レシピ</a></router-link>
-                            </li>
-                            <li class="nav-item">
-                                <router-link v-bind:to="{ name:'Upload', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">アプロード</a></router-link>
-                            </li>
-                        </div>
-                        <div v-else>
+                    <ul v-if="user_id != null" class="navbar-nav">
+                        <li class="nav-item">
+                            <router-link v-bind:to="{ name:'List', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">レシピ</a></router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link v-bind:to="{ name:'Upload', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">アプロード</a></router-link>
+                        </li>
+                    </ul>
+                    <ul v-else class="navbar-nav">
+                        <li class="nav-item">
                             <router-link to="/register"><a class="nav-link">新規登録</a></router-link>
-                        </div>
+                        </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
@@ -37,8 +37,8 @@
         </header>
         <section>
             <div class="container">
-                <div v-for="result in results" :key="result.id">
-                    <div class="card">
+                <div class="description" v-for="result in results" :key="result.id">
+                    <div class="my-3 card">
                         <h5 class="card-header">{{result.name}}/{{result.user_id}}</h5>
                         <div class="card-body">
                             <h5 class="card-title">説明</h5>
@@ -91,6 +91,7 @@ export default {
           this.user_name = null
           console.log(response)
           alert('ログアウト成功')
+          this.$router.push({name: 'Main'})
         })
         .catch(error => {
           alert('ログアウト失敗')
@@ -100,3 +101,9 @@ export default {
   }
 }
 </script>
+
+<style>
+#app{
+    padding-top: 55px;
+}
+</style>

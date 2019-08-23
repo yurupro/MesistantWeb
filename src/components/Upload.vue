@@ -9,15 +9,18 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav">
-                        <div v-if="user_id != null">
-                            <li class="nav-item">
-                                <router-link v-bind:to="{ name:'List', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">レシピ</a></router-link>
-                            </li>
-                            <li class="nav-item">
-                                <router-link v-bind:to="{ name:'Upload', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">アプロード</a></router-link>
-                            </li>
-                        </div>
+                    <ul v-if="user_id != null" class="navbar-nav">
+                        <li class="nav-item">
+                            <router-link v-bind:to="{ name:'List', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">レシピ</a></router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link v-bind:to="{ name:'Upload', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">アプロード</a></router-link>
+                        </li>
+                    </ul>
+                    <ul v-else class="navbar-nav">
+                        <li class="nav-item">
+                            <router-link to="/register"><a class="nav-link">新規登録</a></router-link>
+                        </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
@@ -41,7 +44,6 @@
                                     <label for="editRecipe">レシピを追加</label>
                                     <textarea v-model="form_text" class="form-control" id="editRecipe" rows="15"></textarea>
                             </div>
-                            <router-link to="/"><button type="submit" class="btn btn-primary">戻る</button></router-link>
                             <button  v-on:click="upload()" type="submit" class="btn btn-primary">アップロード</button>
                         </form>
                     </div>
@@ -62,8 +64,9 @@ export default {
     }
   },
   mounted: function () {
-    this.user_id = this.$route.user_id
-    this.user_name = this.$route.user_name
+    console.log(this.$route.params)
+    this.user_id = this.$route.params.user_id
+    this.user_name = this.$route.params.user_name
   },
   methods: {
     upload: function () {
@@ -72,6 +75,7 @@ export default {
       this.$axios.post('/recipe', data)
         .then(response => {
           alert('アップロードに成功しました')
+          this.$router.push({name: 'List', params: { user_id: this.user_id, user_name: this.user_name }})
         })
         .catch(error => {
           alert('アップロードに失敗しました')
@@ -85,6 +89,7 @@ export default {
           this.user_name = null
           console.log(response)
           alert('ログアウト成功')
+          this.$router.push({name: 'Main'})
         })
         .catch(error => {
           alert('ログアウト失敗')
@@ -94,3 +99,9 @@ export default {
   }
 }
 </script>
+
+<style>
+#app{
+    padding-top: 70px;
+}
+</style>

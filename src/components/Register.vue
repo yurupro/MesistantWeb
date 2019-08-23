@@ -9,15 +9,18 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav">
-                        <div v-if="user_id != null">
-                            <li class="nav-item">
-                                <router-link v-bind:to="{ name:'List', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">レシピ</a></router-link>
-                            </li>
-                            <li class="nav-item">
-                                <router-link v-bind:to="{ name:'Upload', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">アプロード</a></router-link>
-                            </li>
-                        </div>
+                    <ul v-if="user_id != null" class="navbar-nav">
+                        <li class="nav-item">
+                            <router-link v-bind:to="{ name:'List', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">レシピ</a></router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link v-bind:to="{ name:'Upload', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">アプロード</a></router-link>
+                        </li>
+                    </ul>
+                    <ul v-else class="navbar-nav">
+                        <li class="nav-item">
+                            <router-link to="/register"><a class="nav-link">新規登録</a></router-link>
+                        </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
@@ -70,7 +73,7 @@
                                 <label for="registerPasswordForm">パスワード</label>
                                 <input v-model="form_password" type="password" class="form-control" id="registerPasswordForm" placeholder="Password"/>
                             </div>
-                            <router-link to="/"><button type="submit" class="btn btn-primary">戻る</button></router-link>
+                            <router-link to="/"><button type="button" class="btn btn-primary">戻る</button></router-link>
                             <button  v-on:click="register()" type="submit" class="btn btn-primary">登録</button>
                         </form>
                     </div>
@@ -132,3 +135,9 @@ export default {
   }
 }
 </script>
+
+<style>
+#app{
+    padding-top: 70px;
+}
+</style>

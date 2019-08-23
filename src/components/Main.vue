@@ -9,15 +9,18 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav">
-                        <div v-if="user_id != null">
-                            <li class="nav-item">
-                                <router-link v-bind:to="{ name:'List', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">レシピ</a></router-link>
-                            </li>
-                            <li class="nav-item">
-                                <router-link v-bind:to="{ name:'Upload', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">アプロード</a></router-link>
-                            </li>
-                        </div>
+                    <ul v-if="user_id != null" class="navbar-nav">
+                        <li class="nav-item">
+                            <router-link v-bind:to="{ name:'List', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">レシピ</a></router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link v-bind:to="{ name:'Upload', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">アプロード</a></router-link>
+                        </li>
+                    </ul>
+                    <ul v-else class="navbar-nav">
+                        <li class="nav-item">
+                            <router-link to="/register"><a class="nav-link">新規登録</a></router-link>
+                        </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
@@ -40,7 +43,6 @@
                         <div class="col-lg-12">
                             <router-link to ="/login"><button type="submit" class="btn btn-primary">ログイン</button></router-link>
                             <router-link to="/register"><button type="submit" class="btn btn-primary">新規登録</button></router-link>
-                            <button type="submit" class="btn btn-primary" v-on:click="logout()">新規登録</button>
                         </div>
                     </div>
                 </div>
@@ -58,6 +60,10 @@ export default {
       user_name: null
     }
   },
+  mounted: function () {
+    this.user_id = this.$route.params.user_id
+    this.user_name = this.$route.params.user_name
+  },
   methods: {
     logout: function () {
       this.$axios.post('/user/logout')
@@ -66,6 +72,7 @@ export default {
           this.user_id = null
           this.user_name = null
           alert('ログアウト成功')
+          this.$router.push({name: 'Main'})
         })
         .catch(error => {
           alert('ログアウト失敗')
@@ -76,5 +83,11 @@ export default {
 }
 </script>
 <style>
-     .jumbotron { background:url(http://koyume.prokuma.kr:8080/image/fried-rice-967081_1920.jpg) center no-repeat; background-size: cover;}
+#app{
+    padding-top: 55px;
+}
+.jumbotron {
+    background:url(http://koyume.prokuma.kr:8080/image/fried-rice-967081_1920.jpg) center no-repeat;
+    background-size: cover;
+}
 </style>

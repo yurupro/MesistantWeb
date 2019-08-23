@@ -9,15 +9,18 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav">
-                        <div v-if="user_id != null">
-                            <li class="nav-item">
-                                <router-link v-bind:to="{ name:'List', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">レシピ</a></router-link>
-                            </li>
-                            <li class="nav-item">
-                                <router-link v-bind:to="{ name:'Upload', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">アプロード</a></router-link>
-                            </li>
-                        </div>
+                    <ul v-if="user_id != null" class="navbar-nav">
+                        <li class="nav-item">
+                            <router-link v-bind:to="{ name:'List', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">レシピ</a></router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link v-bind:to="{ name:'Upload', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">アプロード</a></router-link>
+                        </li>
+                    </ul>
+                    <ul v-else class="navbar-nav">
+                        <li class="nav-item">
+                            <router-link to="/register"><a class="nav-link">新規登録</a></router-link>
+                        </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
@@ -45,7 +48,7 @@
                                 <label for="loginPasswordForm">Password</label>
                                 <input v-model="form_password" type="password" class="form-control" id="passwordForm" placeholder="Password"/>
                             </div>
-                            <router-link to="/"><button type="submit" class="btn btn-primary">戻る</button></router-link>
+                            <router-link to="/"><button type="button" class="btn btn-primary">戻る</button></router-link>
                             <button  v-on:click="login()" type="submit" class="btn btn-primary">ログイン</button>
                         </form>
                     </div>
@@ -57,7 +60,7 @@
 
 <script>
 export default {
-  name: 'MesistantMain',
+  name: 'MesistantLogin',
   data () {
     return {
       user_id: null,
@@ -92,6 +95,7 @@ export default {
           this.user_id = null
           this.user_name = null
           alert('ログアウト成功')
+          this.$router.push({name: 'Main'})
         })
         .catch(error => {
           alert('ログアウト失敗')
@@ -101,3 +105,9 @@ export default {
   }
 }
 </script>
+
+<style>
+#app{
+    padding-top: 70px;
+}
+</style>
