@@ -49,7 +49,7 @@
                         </div>
                         <router-link v-bind:to="{ name:'List', params: { user_id: user_id, user_name: user_name }}"><button class="btn btn-dark">戻る</button></router-link>
                         <button v-on:click="sendToDevice(result.id)" class="btn btn-primary">デバイスに伝送</button>
-                        <router-link v-bind:to="{ name:'Edit', params: { user_id: user_id, user_name: user_name, recipe: result }}"><button class="btn btn-warning">レシピを編集</button></router-link>
+                        <router-link v-if="user_id == result.user_id" v-bind:to="{ name:'Edit', params: { user_id: user_id, user_name: user_name, recipe: result }}"><button class="btn btn-warning">レシピを編集</button></router-link>
                         <button v-if="user_id == result.user_id" v-on:click="recipeDelete(result.id)" class="btn btn-danger">レシピを削除</button>
                     </div>
                 </div>
