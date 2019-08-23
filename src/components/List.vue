@@ -3,15 +3,29 @@
         <header>
             <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
                 <ul class="navbar-nav mr-auto">
-                    <a class="navbar-brand" href="#">Mesistant</a>
+                    <router-link v-bind:to="{ name:'Main', params: { user_id: user_id, user_name: user_name }}"><a class="navbar-brand" href="#">Mesistant</a></router-link>
                 </ul>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <div v-if="user_id != null">
+                            <router-link v-bind:to="{ name:'List', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">レシピ</a></router-link>
+                            <router-link v-bind:to="{ name:'Upload', params: { user_id: user_id, user_name: user_name }}"><a class="nav-link">アプロード</a></router-link>
+                        </div>
+                        <div v-else>
+                            <router-link to="/register"><a class="nav-link">新規登録</a></router-link>
+                        </div>
+                    </ul>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">ログアウト</a>
+                            <div v-if="user_id != null">
+                                <a class="nav-link" v-on:click="logout()">ログアウト({{ user_name }})</a>
+                            </div>
+                            <div v-else>
+                                <router-link to="/login"><a class="nav-link">ログイン</a></router-link>
+                            </div>
                         </li>
                     </ul>
                 </div>

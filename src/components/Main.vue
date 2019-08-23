@@ -39,6 +39,7 @@
                         <div class="col-lg-12">
                             <router-link to ="/login"><button type="submit" class="btn btn-primary">ログイン</button></router-link>
                             <router-link to="/register"><button type="submit" class="btn btn-primary">新規登録</button></router-link>
+                            <button type="submit" class="btn btn-primary" v-on:click="logout()">新規登録</button>
                         </div>
                     </div>
                 </div>
