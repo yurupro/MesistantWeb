@@ -10,6 +10,10 @@ Vue.use(VueBootstrapToasts)
 
 Vue.config.productionTip = false
 
+axios.defaults.baseURL = process.env.VUE_APP_API_BASEURL
+console.log('API_BASEURL: ' + process.env.VUE_APP_API_BASEURL)
+console.log(process.env)
+
 Vue.prototype.$axios = axios
 
 /* eslint-disable no-new */

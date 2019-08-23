@@ -48,7 +48,7 @@ export default {
   mounted () {
     this.user_id = this.$route.params.user_id
     this.user_name = this.$route.params.user_name
-    this.$axios.get('http://koyume.prokuma.kr:8080/recipes')
+    this.$axios.get('/recipes')
       .then(response => {
         console.log(response.data.array)
         this.results = response.data.array
@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     sendToDevice: function (recipeId) {
-      this.$axios.post('http://koyume.prokuma.kr:8080/recipe/' + recipeId + '/add_queue')
+      this.$axios.post('/recipe/' + recipeId + '/add_queue')
         .then(response => {
           console.log(response.data)
           alert('伝送完了')

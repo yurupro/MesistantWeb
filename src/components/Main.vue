@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     logout: function () {
-      this.$axios.post('http://koyume.prokuma.kr:8080/user/logout')
+      this.$axios.post('/user/logout')
         .then(response => {
           console.log(response)
           this.user_id = null

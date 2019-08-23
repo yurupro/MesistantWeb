@@ -68,7 +68,7 @@ export default {
     upload: function () {
       var data = JSON.parse(this.form_text)
       console.log(data)
-      this.$axios.post('http://koyume.prokuma.kr:8080/recipe', data)
+      this.$axios.post('/recipe', data)
         .then(response => {
           alert('アップロードに成功しました')
         })
@@ -78,7 +78,7 @@ export default {
         })
     },
     logout: function () {
-      this.$axios.post('http://koyume.prokuma.kr:8080/user/logout')
+      this.$axios.post('/user/logout')
         .then(response => {
           this.user_id = null
           this.user_name = null
