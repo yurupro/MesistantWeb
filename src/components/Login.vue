@@ -37,7 +37,8 @@ export default {
       console.log(this.mail)
       var data = {'mail': this.form_mail, 'password': this.form_password}
       console.log(data)
-      this.$axios.post('http://koyume.prokuma.kr:8080/user/login', data)
+      console.log(this.$apiBaseURL)
+      this.$axios.post('/user/login', data)
         .then(response => {
           this.login_response = response.data
           this.$router.push({name: 'List', params: { user_id: this.login_response.id }})

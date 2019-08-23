@@ -60,7 +60,7 @@ export default {
   methods: {
     logout: function () {
       var data = {'mail': this.form_mail, 'password': this.form_password}
-      this.$axios.post('http://koyume.prokuma.kr:8080/user/logout', data)
+      this.$axios.post('/user/logout', data)
         .then(response => {
           alert('ログアウト成功')
           console.log(response)
@@ -72,7 +72,7 @@ export default {
     },
     register: function () {
       console.log(this.user)
-      this.$axios.post('http://koyume.prokuma.kr:8080/user/add', {'mail': this.form_mail, 'password': this.form_password, 'name': this.form_name, 'sex': this.form_sex})
+      this.$axios.post('/user/add', {'mail': this.form_mail, 'password': this.form_password, 'name': this.form_name, 'sex': this.form_sex})
         .then(response => {
           this.register_response = response
           alert('登録に成功しました！ログインしてください！')
