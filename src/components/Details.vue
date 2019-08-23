@@ -38,15 +38,19 @@
 
         <section>
             <div class="container">
-                <div class="description" v-for="result in results" :key="result.id">
-                    <div class="my-3 card">
-                        <h5 class="card-header">{{ result.name }}</h5>
-                        <div class="card-body">
-                            <h5 class="card-title">説明</h5>
-                            <p class="card-text">{{ result.description }}</p>
-                            <router-link v-bind:to="{ name:'Details', params: { user_id: user_id, user_name: user_name, recipe_id: result.id }}"><button class="btn btn-info">詳細</button></router-link>
-                            <button v-on:click="sendToDevice(result.id)" class="btn btn-primary">デバイスに伝送</button>
+                <div class="my-3 card">
+                    <h5 class="card-header">{{ result.name }}</h5>
+                    <div class="card-body">
+                        <h5 class="card-title">説明</h5>
+                        <p class="card-text">{{ result.description }}</p>
+                        <h5 class="card-title">手順</h5>
+                        <div v-for="(step, index) in result.steps" :key="index">
+                            <p>{{ index + 1 }}: {{ step.description }}</p>
                         </div>
+                        <router-link v-bind:to="{ name:'List', params: { user_id: user_id, user_name: user_name }}"><button class="btn btn-dark">戻る</button></router-link>
+                        <button v-on:click="sendToDevice(result.id)" class="btn btn-primary">デバイスに伝送</button>
+                        <router-link v-bind:to="{ name:'Edit', params: { user_id: user_id, user_name: user_name, recipe: result }}"><button class="btn btn-warning">レシピを編集</button></router-link>
+                        <button v-if="user_id == result.user_id" v-on:click="recipeDelete(result.id)" class="btn btn-danger">レシピを削除</button>
                     </div>
                 </div>
             </div>
@@ -56,32 +60,27 @@
 
 <script>
 export default {
-  name: 'MesistantList',
+  name: 'MesistantDetails',
   data () {
     return {
       user_id: null,
       user_name: null,
-      results: [],
+      recipe_id: null,
+      result: null,
       send_result: null
     }
   },
   mounted () {
     this.user_id = this.$route.params.user_id
     this.user_name = this.$route.params.user_name
-    this.$axios.get('/recipes')
+    this.recipe_id = this.$route.params.recipe_id
+    this.$axios.get('/recipe/' + this.recipe_id)
       .then(response => {
-        console.log(response.data.array)
-        this.results = response.data.array
+        console.log(response.data)
+        this.result = response.data
       })
   },
   methods: {
-    getRecipes: function () {
-      this.$axios.get('/recipes')
-        .then(response => {
-          console.log(response.data.array)
-          this.results = response.data.array
-        })
-    },
     sendToDevice: function (recipeId) {
       this.$axios.post('/recipe/' + recipeId + '/add_queue')
         .then(response => {
@@ -96,15 +95,9 @@ export default {
     recipeDelete: function (recipeId) {
       this.$axios.delete('/recipe/' + recipeId)
         .then(response => {
-          console.log(this.results)
           console.log(response.data)
           alert('削除完了')
-          for (var i = 0; i < this.results.length; i++) {
-            if (this.results[i].id === recipeId) {
-              this.results.splice(i, 1)
-              break
-            }
-          }
+          this.$router.push({name: 'List', params: { user_id: this.user_id, user_name: this.user_name }})
         })
         .catch(error => {
           console.log(error)

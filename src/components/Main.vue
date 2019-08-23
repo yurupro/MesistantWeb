@@ -87,7 +87,7 @@ export default {
     padding-top: 55px;
 }
 .jumbotron {
-    background:url(http://koyume.prokuma.kr:8080/image/fried-rice-967081_1920.jpg) center no-repeat;
+    background:url('../assets/background.jpg') center no-repeat;
     background-size: cover;
 }
 </style>
