@@ -35,18 +35,17 @@
                 </div>
             </nav>
         </header>
-
         <section>
             <div class="container">
-                <div class="description" v-for="result in results" :key="result.id">
-                    <div class="my-3 card">
-                        <h5 class="card-header">{{ result.name }}</h5>
-                        <div class="card-body">
-                            <h5 class="card-title">説明</h5>
-                            <p class="card-text">{{ result.description }}</p>
-                            <router-link v-bind:to="{ name:'Details', params: { user_id: user_id, user_name: user_name, recipe_id: result.id }}"><button class="btn btn-info">詳細</button></router-link>
-                            <button v-on:click="sendToDevice(result.id)" class="btn btn-primary">デバイスに伝送</button>
-                        </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form>
+                            <div class="form-group">
+                                    <label for="editRecipe">レシピを追加</label>
+                                    <textarea v-model="form_text" class="form-control" id="editRecipe" rows="15"></textarea>
+                            </div>
+                            <button  v-on:click="edit()" type="submit" class="btn btn-primary">編集</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -56,59 +55,34 @@
 
 <script>
 export default {
-  name: 'MesistantList',
+  name: 'MesistantMain',
   data () {
     return {
       user_id: null,
       user_name: null,
-      results: [],
-      send_result: null
+      recipe: null,
+      form_text: ''
     }
   },
-  mounted () {
+  mounted: function () {
+    console.log(this.$route.params)
     this.user_id = this.$route.params.user_id
     this.user_name = this.$route.params.user_name
-    this.$axios.get('/recipes')
-      .then(response => {
-        console.log(response.data.array)
-        this.results = response.data.array
-      })
+    this.recipe = this.$route.params.recipe
+    this.form_text = JSON.stringify(this.recipe, null, 4)
   },
   methods: {
-    getRecipes: function () {
-      this.$axios.get('/recipes')
+    edit: function () {
+      var data = JSON.parse(this.form_text)
+      console.log(data)
+      this.$axios.put('/recipe', data)
         .then(response => {
-          console.log(response.data.array)
-          this.results = response.data.array
-        })
-    },
-    sendToDevice: function (recipeId) {
-      this.$axios.post('/recipe/' + recipeId + '/add_queue')
-        .then(response => {
-          console.log(response.data)
-          alert('伝送完了')
+          alert('編集に成功しました')
+          this.$router.push({name: 'Details', params: { user_id: this.user_id, user_name: this.user_name, recipe_id: this.recipe.id }})
         })
         .catch(error => {
+          alert('編集に失敗しました')
           console.log(error)
-          alert('伝送失敗')
-        })
-    },
-    recipeDelete: function (recipeId) {
-      this.$axios.delete('/recipe/' + recipeId)
-        .then(response => {
-          console.log(this.results)
-          console.log(response.data)
-          alert('削除完了')
-          for (var i = 0; i < this.results.length; i++) {
-            if (this.results[i].id === recipeId) {
-              this.results.splice(i, 1)
-              break
-            }
-          }
-        })
-        .catch(error => {
-          console.log(error)
-          alert('削除失敗')
         })
     },
     logout: function () {
@@ -131,6 +105,6 @@ export default {
 
 <style>
 #app{
-    padding-top: 55px;
+    padding-top: 70px;
 }
 </style>

@@ -78,7 +78,7 @@ export default {
       console.log(this.mail)
       var data = {'mail': this.form_mail, 'password': this.form_password}
       console.log(data)
-      this.$axios.post('http://koyume.prokuma.kr:8080/user/login', data)
+      this.$axios.post('/user/login', data)
         .then(response => {
           this.login_response = response.data
           this.$router.push({name: 'List', params: { user_id: this.login_response.id, user_name: this.login_response.name }})
@@ -89,7 +89,7 @@ export default {
         })
     },
     logout: function () {
-      this.$axios.post('http://koyume.prokuma.kr:8080/user/logout')
+      this.$axios.post('/user/logout')
         .then(response => {
           console.log(response)
           this.user_id = null

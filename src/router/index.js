@@ -5,6 +5,9 @@ import List from '@/components/List'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Upload from '@/components/Upload'
+import Logout from '@/components/Logout'
+import Details from '@/components/Details'
+import Edit from '@/components/Edit'
 
 Vue.use(Router)
 
@@ -21,6 +24,11 @@ export default new Router({
       component: Login
     },
     {
+      path: '/logout',
+      name: 'Logout',
+      component: Logout
+    },
+    {
       path: '/register',
       name: 'Register',
       component: Register
@@ -34,6 +42,16 @@ export default new Router({
       path: '/list',
       name: 'List',
       component: List
+    },
+    {
+      path: '/edit',
+      name: 'Edit',
+      component: Edit
+    },
+    {
+      path: '/details',
+      name: 'Details',
+      component: Details
     }
   ]
 })
